@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Comments</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .comment-box {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .comment-header {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .comment-content {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="video-banner">
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" id="youtube-link" src="" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="container mt-5">
+            <h2 class="mb-4">User Comments:</h2>
+
+            <div id="comments-container"></div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const videoId = 'ywVERVudczw';
+
+            // Set the YouTube video iframe src
+            const youtubeIframe = document.getElementById('youtube-link');
+            youtubeIframe.src = `https://www.youtube.com/embed/${videoId}`;
+
+            // Fetch comments for the video
+            fetch('http://localhost:3000/comments/get-comments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ videoId: videoId })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const commentsContainer = document.getElementById('comments-container');
+                    data.comments.forEach(comment => {
+                        const commentBox = document.createElement('div');
+                        commentBox.classList.add('comment-box');
+                        commentBox.innerHTML = `
+                            <h3 class="user-name">${comment.user}</h3>
+                            <hr>
+                            <div class="comment-content">${comment.content}</div>
+                        `;
+                        commentsContainer.appendChild(commentBox);
+                    });
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        });
+    </script>
+</body>
+
+</html>
