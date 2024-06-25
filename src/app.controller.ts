@@ -4,7 +4,7 @@ import { create_comments_dto, video_id_dto } from './app.dto';
 import { Body, Controller, Get, HttpStatus, Post, Render, Res } from '@nestjs/common';
 
 @Controller('comments')
-export class AppController {
+export class AppController {//
   @Get('/')
   @Render('index')
   async home(@Res() res: Response): Promise<any> {

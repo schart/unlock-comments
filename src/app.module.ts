@@ -8,7 +8,7 @@ import { Comments, CommentsSchema, Videos, VideosSchema } from './app.schema';
   imports: [MongooseModule.forRoot('mongodb://localhost/unlock-comments'),
   MongooseModule.forFeature([{ name: Comments.name, schema: CommentsSchema }]),
   MongooseModule.forFeature([{ name: Videos.name, schema: VideosSchema }]),
-  ],
+  ],//
   controllers: [AppController],
   providers: [AppService],
 })

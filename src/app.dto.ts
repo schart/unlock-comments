@@ -7,7 +7,7 @@ export class create_comments_dto {
     @IsString()
     content: string
 
-    @IsString()
+    @IsString()//
     videoId: string
 }
 
