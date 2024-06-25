@@ -1,0 +1,25 @@
+{
+    "name": "CommentToGether",
+    "version": "1.0.0",
+    "description": "Comment of video",
+    "manifest_version": 3,
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "scripting"
+    ],
+    "action": {
+        "default_popup": "index.html",
+        "default_title": "Comment To Gether"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "script.js"
+            ]
+        }
+    ]
+}
